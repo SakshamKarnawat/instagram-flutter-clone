@@ -141,7 +141,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     //blue Facebook icon, Log in with Facebook text button
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.facebook_outlined,
+                          color: blueColor,
+                          size: 32,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          'Log in with Facebook',
+                          style: TextStyle(
+                              color: blueColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                     Flexible(
                       child: Container(),
                       flex: 2,
