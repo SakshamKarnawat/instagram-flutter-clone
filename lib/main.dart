@@ -1,6 +1,28 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
+import 'package:instagram_clone/screens/login_screen.dart';
+import 'package:instagram_clone/utils/colors.dart';
 
-void main() {
+import 'responsive/mobile_screen_layout.dart';
+import 'responsive/web_screen_layout.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyC5Yhk0TTxnP8ZYA5XHwTttREiFuvcuBuo",
+        appId: "1:1004502463697:web:d6d691b2ce66421a8a41f0",
+        messagingSenderId: "1004502463697",
+        projectId: "instagram-clone-b9139",
+        storageBucket: "instagram-clone-b9139.appspot.com",
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
   runApp(const MyApp());
 }
 
@@ -9,6 +31,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Instagram Clone',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: mobileBackgroundColor,
+      ),
+      home:
+          LoginScreen(), /* const ResponsiveLayout(
+        webScreenLayout: WebScreenLayout(),
+        mobileScreenLayout: MobileScreenLayout(),
+      ), */
+    );
   }
 }
