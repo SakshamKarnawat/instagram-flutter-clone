@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
@@ -39,8 +40,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Text('English'),
-                        Icon(Icons.keyboard_arrow_down),
+                        Text(
+                          'English (India)',
+                          style: TextStyle(color: Colors.white54),
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white54,
+                        ),
                       ],
                     ),
                     //instagram svg
@@ -77,35 +84,39 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFF002d45)),
                           padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.symmetric(vertical: 14)),
+                              const EdgeInsets.symmetric(vertical: 14)),
                         ),
                         onPressed: () {
                           print("Log in function");
                         },
-                        child: const Text('Log In'),
+                        child: const Text(
+                          'Log In',
+                          style: TextStyle(
+                            color: Colors.white30,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 12,
                     ),
                     //text - forgot your login details? Richtextspan:Get help logging in.
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: const Text(
-                            "Forgot your login details?",
-                            style:
-                                TextStyle(color: Colors.white38, fontSize: 13),
+                    Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: const Text(
+                              "Forgot your login details?",
+                              style: TextStyle(
+                                  color: Colors.white38, fontSize: 13),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 6),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            print("Get help logging in.");
-                          },
-                          child: Container(
+                          Container(
                             child: const Text(
                               " Get help logging in.",
                               style: TextStyle(
@@ -113,53 +124,57 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 6),
                           ),
-                        ),
-                      ],
-                    ),
-                    //Divider------------OR-------------Divider
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        children: const [
-                          Expanded(
-                            child: Divider(
-                              color: Colors.white30,
-                            ),
-                          ),
-                          Text(
-                            "  OR  ",
-                            style: TextStyle(
-                              color: Colors.white54,
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Colors.white30,
-                            ),
-                          ),
                         ],
                       ),
                     ),
+                    //Divider------------OR-------------Divider
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Row(
+                          children: const [
+                            Flexible(
+                              child: Divider(
+                                color: Colors.white30,
+                              ),
+                            ),
+                            Text(
+                              "  OR  ",
+                              style: TextStyle(
+                                color: Colors.white54,
+                              ),
+                            ),
+                            Flexible(
+                              child: Divider(
+                                color: Colors.white30,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     //blue Facebook icon, Log in with Facebook text button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.facebook_outlined,
-                          color: blueColor,
-                          size: 32,
-                        ),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Text(
-                          'Log in with Facebook',
-                          style: TextStyle(
-                              color: blueColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.facebook_outlined,
+                            color: blueColor,
+                            size: 32,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            'Log in with Facebook',
+                            style: TextStyle(
+                                color: blueColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                     Flexible(
                       child: Container(),
@@ -185,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print("Sign up.");
+                    print("Sign up");
                   },
                   child: Container(
                     child: const Text(
