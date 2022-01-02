@@ -1,4 +1,6 @@
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 Future<Uint8List?> pickImage(ImageSource source) async {
@@ -9,4 +11,8 @@ Future<Uint8List?> pickImage(ImageSource source) async {
   } else {
     print("No image selected");
   }
+}
+
+void showSnackBar(String content, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(content)));
 }

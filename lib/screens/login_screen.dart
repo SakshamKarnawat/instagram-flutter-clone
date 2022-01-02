@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -89,8 +91,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: MaterialStateProperty.all<EdgeInsets>(
                               const EdgeInsets.symmetric(vertical: 14)),
                         ),
-                        onPressed: () {
-                          print("Log in function");
+                        onPressed: () async {
+                          String res = await AuthMethods().logInUser(
+                            email: "saksham@email.com",
+                            password: "password",
+                          );
+                          if (res != "Success!") {
+                            showSnackBar(res, context);
+                          }
                         },
                         child: const Text(
                           'Log In',

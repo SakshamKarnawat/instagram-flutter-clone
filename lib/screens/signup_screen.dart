@@ -80,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         //     ),
                         //   ),
                         //   child: const Icon(
-                        //     Icons.manage_accounts,
+                        //     Icons.person,
                         //     size: 80,
                         //     color: primaryColor,
                         //     //color: Colors.black,
@@ -170,7 +170,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                         bio: "Saksham's bio",
                                         imageFile: imageFile!,
                                       );
-                                      print(res);
+                                      if (res != "Success!") {
+                                        showSnackBar(res, context);
+                                      }
                                     },
                                     child: const Text(
                                       'Next',

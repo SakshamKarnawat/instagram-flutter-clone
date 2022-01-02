@@ -1,12 +1,19 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/storage_methods.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<model.User> getUserDetails() async {
+    User? currentUser = _auth.currentUser;
+    DocumentSnapshot snapshot =
+        await _firestore.collection('users').doc(currentUser?.uid).get();
+    return model.User.fromSnap(snapshot);
+  }
 
   //Sign up user:
   Future<String> signUpUser(
@@ -20,23 +27,21 @@ class AuthMethods {
       //create user:
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-
-      print(credential.user!.uid);
-
       final String profilePicURL = await StorageMethods()
           .uploadProfilePicToStorage(imageFile /* , username */);
-
       //add user to database:
-      _firestore.collection('users').doc(credential.user!.uid).set({
-        'username': username,
-        'uid': credential.user!.uid,
-        'email': email,
-        'password': password,
-        'bio': bio,
-        'followers': [],
-        'following': [],
-        'profilePicURL': profilePicURL,
-      });
+      model.User _user = model.User(
+        username: username,
+        uid: credential.user!.uid,
+        email: email,
+        bio: bio,
+        followers: [],
+        following: [],
+        profilePicURL: profilePicURL,
+      );
+      _firestore.collection('users').doc(credential.user!.uid).set(
+            _user.toJson(),
+          );
       result = "Success!";
     } catch (err) {
       result = err.toString();
@@ -45,4 +50,16 @@ class AuthMethods {
   }
 
   //Log in user:
+  Future<String> logInUser(
+      {required String email, required String password}) async {
+    String result = "Some error occured";
+
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      result = "Success!";
+    } catch (err) {
+      result = err.toString();
+    }
+    return result;
+  }
 }
