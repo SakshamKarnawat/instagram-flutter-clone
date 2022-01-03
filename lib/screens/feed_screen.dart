@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:instagram_clone/providers/navbar_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:provider/provider.dart';
 
-class FeedScreen extends StatelessWidget {
+class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
 
   @override
+  State<FeedScreen> createState() => _FeedScreenState();
+}
+
+class _FeedScreenState extends State<FeedScreen>
+    with AutomaticKeepAliveClientMixin<FeedScreen> {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -71,12 +82,12 @@ class FeedScreen extends StatelessWidget {
                 children: const [
                   UserStories(
                     username: 'Your Story',
-                    profilePicURL: 'assets/images/mystory.jpg',
+                    profilePicURL: 'assets/images/profile1.jpg',
                     viewedAll: true,
                   ),
                   UserStories(
-                    username: 'virdas',
-                    profilePicURL: 'assets/images/story1.jpg',
+                    username: 'saksham_227',
+                    profilePicURL: 'assets/images/mystory.jpg',
                     viewedAll: true,
                   ),
                   UserStories(
@@ -85,13 +96,13 @@ class FeedScreen extends StatelessWidget {
                     viewedAll: false,
                   ),
                   UserStories(
-                    username: 'ksm',
-                    profilePicURL: 'assets/images/story2.jpg',
+                    username: 'samayraina',
+                    profilePicURL: 'assets/images/profile2.jpg',
                     viewedAll: false,
                   ),
                   UserStories(
-                    username: 'a',
-                    profilePicURL: 'assets/images/story1.jpg',
+                    username: 'fcbarcelona',
+                    profilePicURL: 'assets/images/profile3.jpg',
                     viewedAll: false,
                   ),
                   UserStories(

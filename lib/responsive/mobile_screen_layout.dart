@@ -1,58 +1,45 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/providers/navbar_provider.dart';
+import 'package:instagram_clone/screens/activity_screen.dart';
+import 'package:instagram_clone/screens/explore_screen.dart';
 import 'package:instagram_clone/screens/feed_screen.dart';
+import 'package:instagram_clone/screens/profile_screen.dart';
+import 'package:instagram_clone/screens/reels_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:provider/provider.dart';
 
-class MobileScreenLayout extends StatefulWidget {
-  const MobileScreenLayout({Key? key}) : super(key: key);
+class MobileScreenLayout extends StatelessWidget {
+  MobileScreenLayout({Key? key}) : super(key: key);
 
-  @override
-  _MobileScreenLayoutState createState() => _MobileScreenLayoutState();
-}
-
-class _MobileScreenLayoutState extends State<MobileScreenLayout> {
+  late int _pageIndex;
   late PageController _pageController;
-  int _pageIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  void navigationTapped(int page) {
-    _pageController.jumpToPage(page);
-    setState(() {
-      _pageIndex = page;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    print("build called");
+    _pageIndex =
+        Provider.of<NavBarProvider>(context, listen: false).getNavbarIndex;
+    _pageController = Provider.of<NavBarProvider>(context, listen: false)
+        .getNavbarPageController;
     return Scaffold(
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
+        children: [
           FeedScreen(),
-          SafeArea(child: Text('Explore')),
-          SafeArea(child: Text('Reels')),
-          SafeArea(child: Text('Activity')),
-          SafeArea(child: Text('Profile')),
+          ExploreScreen(),
+          ReelsScreen(),
+          ActivityScreen(),
+          ProfileScreen(),
         ],
-        onPageChanged: navigationTapped,
+        //onPageChanged: Provider.of<NavBarProvider>(context).onPageChanged,
       ),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _pageIndex,
         activeColor: primaryColor,
-        onTap: navigationTapped,
+        onTap: Provider.of<NavBarProvider>(context).bottomNavBarTapped,
         backgroundColor: mobileBackgroundColor,
         items: [
           BottomNavigationBarItem(
