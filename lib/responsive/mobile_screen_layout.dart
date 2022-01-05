@@ -11,23 +11,21 @@ import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 class MobileScreenLayout extends StatelessWidget {
-  MobileScreenLayout({Key? key}) : super(key: key);
-
-  late int _pageIndex;
-  late PageController _pageController;
+  const MobileScreenLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print("build called");
-    _pageIndex =
+    int _pageIndex =
         Provider.of<NavBarProvider>(context, listen: false).getNavbarIndex;
-    _pageController = Provider.of<NavBarProvider>(context, listen: false)
-        .getNavbarPageController;
+    PageController _pageController =
+        Provider.of<NavBarProvider>(context, listen: false)
+            .getNavbarPageController;
+    print("build called");
     return Scaffold(
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: [
+        children: const [
           FeedScreen(),
           ExploreScreen(),
           ReelsScreen(),
@@ -40,6 +38,7 @@ class MobileScreenLayout extends StatelessWidget {
         currentIndex: _pageIndex,
         activeColor: primaryColor,
         onTap: Provider.of<NavBarProvider>(context).bottomNavBarTapped,
+        // onTap: Provider.of<NavBarProvider>(context).bottomNavBarTapped,
         backgroundColor: mobileBackgroundColor,
         items: [
           BottomNavigationBarItem(
@@ -87,7 +86,7 @@ class MobileScreenLayout extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Container(
               child: CircleAvatar(
-                radius: _pageIndex == 4 ? 18 : 16,
+                radius: _pageIndex == 4 ? 16 : 14,
                 child: ClipOval(
                   child: Image.asset(
                     'assets/images/profile1.jpg',

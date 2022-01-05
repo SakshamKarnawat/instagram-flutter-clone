@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 class NavBarProvider extends ChangeNotifier {
-  int _selectedNavbarIndex = 0;
+  static int _selectedNavbarIndex = 4;
   final PageController _pageController =
-      PageController(keepPage: true, initialPage: 0);
-  final ScrollController _scrollController = ScrollController();
+      PageController(keepPage: true, initialPage: _selectedNavbarIndex);
+  // final ScrollController _scrollController = ScrollController();
 
   int get getNavbarIndex => _selectedNavbarIndex;
   PageController get getNavbarPageController => _pageController;
-  ScrollController get getScrollController => _scrollController;
+  // ScrollController get getScrollController => _scrollController;
 
   void bottomNavBarTapped(int index) {
-    _selectedNavbarIndex = index;
-    _pageController.jumpToPage(_selectedNavbarIndex);
-    notifyListeners();
+    if (index != _selectedNavbarIndex) {
+      _selectedNavbarIndex = index;
+      _pageController.jumpToPage(_selectedNavbarIndex);
+      notifyListeners();
+    }
   }
 
   @override
