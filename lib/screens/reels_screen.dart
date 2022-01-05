@@ -45,7 +45,7 @@ class _ReelsScreenState extends State<ReelsScreen>
         itemCount: 5,
         itemBuilder: (context, index) {
           return SingleReelScreen(
-            reelURL: reelsURLs[1],
+            reelURL: reelsURLs[0],
             username: "saksham_22",
             userPictureURL: "assets/images/profile3.jpg",
             reelDescription: "This is an example of a reel description",

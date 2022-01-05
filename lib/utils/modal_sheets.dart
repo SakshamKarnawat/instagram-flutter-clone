@@ -144,14 +144,14 @@ void profileModalSheet(BuildContext context) {
             onTap: () {},
             splashColor: Colors.white12,
             splashFactory: InkSplash.splashFactory,
-            child: ListTile(
+            child: const ListTile(
               minLeadingWidth: 0,
-              leading: const Icon(
+              leading: Icon(
                 Icons.health_and_safety_outlined,
                 color: primaryColor,
               ),
               horizontalTitleGap: 12,
-              title: const Text('COVID-19 Information Center'),
+              title: Text('COVID-19 Information Center'),
               selectedColor: Colors.blue,
               selectedTileColor: Colors.amber,
               hoverColor: Colors.green,
