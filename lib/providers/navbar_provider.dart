@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class NavBarProvider extends ChangeNotifier {
   int _selectedNavbarIndex = 0;
-  final PageController _pageController = PageController(keepPage: true);
+  final PageController _pageController =
+      PageController(keepPage: true, initialPage: 0);
   final ScrollController _scrollController = ScrollController();
 
   int get getNavbarIndex => _selectedNavbarIndex;
