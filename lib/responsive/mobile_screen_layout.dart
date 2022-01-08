@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/providers/navbar_provider.dart';
 import 'package:instagram_clone/screens/activity_screen.dart';
@@ -105,6 +106,66 @@ class MobileScreenLayout extends StatelessWidget {
             backgroundColor: _pageIndex == 4 ? primaryColor : secondaryColor,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class TestScreen extends StatefulWidget {
+  const TestScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TestScreen> createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  late final TabController _tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Test'),
+      ),
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          scrollDirection: Axis.vertical,
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(
+              //headerSilverBuilder only accepts slivers
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text('My Top Widget'),
+                  ),
+                  TabBar(
+                    tabs: [
+                      Tab(child: Text('Available')),
+                      Tab(child: Text('Taken')),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+          body: TabBarView(
+            children: [
+              // I wrapped large widgets in the SingleChildScrollView
+              SingleChildScrollView(
+                child: Text('1') /*Very large widget*/,
+              ),
+              Text('2'),
+            ],
+          ),
+        ),
       ),
     );
   }
