@@ -134,16 +134,28 @@ class _ExploreScreenState extends State<ExploreScreen>
             _fullSearch
                 ? SliverGrid(
                     delegate: SliverChildBuilderDelegate(
-                      (context, index) => ListTile(title: Text('Item #$index')),
-                      childCount: 100,
+                      (context, index) {
+                        return Ink.image(
+                          image: const AssetImage('assets/images/profile1.jpg'),
+                          child: InkWell(
+                            onLongPress: () {
+                              print("Long pressed");
+                            },
+                            onTap: () {},
+                          ),
+                        );
+                      },
+                      childCount: 25,
                     ),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
+                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 2,
                     ),
                   )
-                : SliverToBoxAdapter(
-                    child: Text("User"),
+                : const SliverToBoxAdapter(
+                    child: SizedBox(),
                   ),
           ],
         ),

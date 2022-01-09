@@ -38,11 +38,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   final ScrollController _scrollController =
       ScrollController(keepScrollOffset: true);
 
-  final List<Tab> myTabs = <Tab>[
-    const Tab(text: 'kArtwork'),
-    const Tab(text: 'kPastJobs')
-  ];
-
   bool _storyHighlightsExpanded = false;
 
   @override
@@ -537,36 +532,59 @@ class _ProfileScreenState extends State<ProfileScreen>
         crossAxisSpacing: 2,
       ),
       children: [
-        InkWell(
-          onLongPress: () {
-            print("Long pressed");
-          },
-          onTap: () {},
-          child: Image.asset(
-            'assets/images/profile1.jpg',
-            height: 15,
-            width: 15,
+        Ink.image(
+          image: const AssetImage('assets/images/profile1.jpg'),
+          child: InkWell(
+            onLongPress: () {
+              print("Long pressed");
+            },
+            onTap: () {},
           ),
         ),
-        Image.asset(
-          'assets/images/profile2.jpg',
-          height: 15,
-          width: 15,
+        Ink.image(
+          image: const AssetImage('assets/images/profile1.jpg'),
+          child: InkWell(
+            onLongPress: () {
+              print("Long pressed");
+            },
+            onTap: () {},
+          ),
         ),
-        Image.asset(
-          'assets/images/profile3.jpg',
-          height: 15,
-          width: 15,
+        Ink.image(
+          image: const AssetImage('assets/images/profile1.jpg'),
+          child: InkWell(
+            onLongPress: () {
+              print("Long pressed");
+            },
+            onTap: () {},
+          ),
         ),
-        Image.asset(
-          'assets/images/profile1.png',
-          height: 15,
-          width: 15,
+        Ink.image(
+          image: const AssetImage('assets/images/profile1.jpg'),
+          child: InkWell(
+            onLongPress: () {
+              print("Long pressed");
+            },
+            onTap: () {},
+          ),
         ),
-        Image.asset(
-          'assets/images/profile2.jpg',
-          height: 15,
-          width: 15,
+        Ink.image(
+          image: const AssetImage('assets/images/profile1.jpg'),
+          child: InkWell(
+            onLongPress: () {
+              print("Long pressed");
+            },
+            onTap: () {},
+          ),
+        ),
+        Ink.image(
+          image: const AssetImage('assets/images/profile1.jpg'),
+          child: InkWell(
+            onLongPress: () {
+              print("Long pressed");
+            },
+            onTap: () {},
+          ),
         ),
       ],
     );

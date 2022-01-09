@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/data/models/user.dart' as usermodel;
 import 'package:instagram_clone/providers/navbar_provider.dart';
+import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
+import 'package:instagram_clone/providers/theme_provider.dart';
 import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
 import 'package:instagram_clone/screens/login_screen.dart';
@@ -39,8 +41,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => NavBarProvider()),
+        ChangeNotifierProvider(create: (_) => PageViewProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NavBarProvider extends ChangeNotifier {
-  static int _selectedNavbarIndex = 4;
+  static int _selectedNavbarIndex = 0;
   final PageController _pageController =
       PageController(keepPage: true, initialPage: _selectedNavbarIndex);
   // final ScrollController _scrollController = ScrollController();
@@ -18,9 +18,9 @@ class NavBarProvider extends ChangeNotifier {
     }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    // _pageController.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   // _pageController.dispose();
+  // }
 }

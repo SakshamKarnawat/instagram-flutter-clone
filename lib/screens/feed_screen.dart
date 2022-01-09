@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:instagram_clone/providers/navbar_provider.dart';
+import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -45,11 +46,17 @@ class _FeedScreenState extends State<FeedScreen>
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: SvgPicture.asset(
-                  'assets/images/chat_icon.svg',
-                  height: 28,
-                  width: 28,
-                  color: primaryColor,
+                child: GestureDetector(
+                  onTap: () {
+                    Provider.of<PageViewProvider>(context, listen: false)
+                        .changePage(2);
+                  },
+                  child: SvgPicture.asset(
+                    'assets/images/chat_icon.svg',
+                    height: 28,
+                    width: 28,
+                    color: primaryColor,
+                  ),
                 ),
               ),
               Positioned(

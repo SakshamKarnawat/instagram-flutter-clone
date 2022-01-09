@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/providers/navbar_provider.dart';
 import 'package:instagram_clone/screens/activity_screen.dart';
+import 'package:instagram_clone/screens/chat_screen.dart';
 import 'package:instagram_clone/screens/explore_screen.dart';
 import 'package:instagram_clone/screens/feed_screen.dart';
+import 'package:instagram_clone/screens/pageview_camerafeedchat.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/screens/reels_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
@@ -19,15 +20,14 @@ class MobileScreenLayout extends StatelessWidget {
     int _pageIndex =
         Provider.of<NavBarProvider>(context, listen: false).getNavbarIndex;
     PageController _pageController =
-        Provider.of<NavBarProvider>(context, listen: false)
-            .getNavbarPageController;
+        Provider.of<NavBarProvider>(context).getNavbarPageController;
     print("build called");
     return Scaffold(
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: const [
-          FeedScreen(),
+          PageViewCameraFeedChat(),
           ExploreScreen(),
           ReelsScreen(),
           ActivityScreen(),
