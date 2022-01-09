@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/utils/colors.dart';
 
 class ProfileListTile extends StatelessWidget {
   final String profilePicURL;
@@ -7,14 +8,18 @@ class ProfileListTile extends StatelessWidget {
   final String msg;
   final String timeAgo;
   final bool isSeen;
-  const ProfileListTile(
-      {Key? key,
-      required this.profilePicURL,
-      required this.name,
-      required this.msg,
-      required this.timeAgo,
-      required this.isSeen})
-      : super(key: key);
+  final bool hasStories;
+  final bool allStoriesViewed;
+  const ProfileListTile({
+    Key? key,
+    required this.profilePicURL,
+    required this.name,
+    required this.msg,
+    required this.timeAgo,
+    required this.isSeen,
+    required this.hasStories,
+    required this.allStoriesViewed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +49,7 @@ class ProfileListTile extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: isSeen ? FontWeight.normal : FontWeight.bold,
+                    color: isSeen ? secondaryColor : primaryColor,
                   ))),
           Text(' · ',
               style: TextStyle(
@@ -57,11 +63,27 @@ class ProfileListTile extends StatelessWidget {
       ),
       trailing: Padding(
         padding: const EdgeInsets.only(left: 15.0, right: 8),
-        child: SvgPicture.asset(
-          'assets/images/camera_icon.svg',
-          color: Colors.white60,
-          width: 30,
-          height: 30,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (!isSeen)
+              Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: blueColor,
+                ),
+              ),
+            SizedBox(width: 25),
+            SvgPicture.asset(
+              'assets/images/camera_icon.svg',
+              color: isSeen ? Colors.white60 : primaryColor,
+              width: 30,
+              height: 30,
+            ),
+          ],
         ),
       ),
     );

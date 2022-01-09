@@ -55,8 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             Padding(
               padding: EdgeInsets.only(top: 4.0),
               child: Icon(
-                Icons.arrow_downward,
-                size: 14,
+                Icons.keyboard_arrow_down,
+                size: 20,
                 color: secondaryColor,
               ),
             ),

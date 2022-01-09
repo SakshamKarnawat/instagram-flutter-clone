@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -31,11 +32,18 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-  runApp(const MyApp());
+  final cameras = await availableCameras();
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final CameraDescription camera;
+  const MyApp({
+    Key? key,
+    required this.camera,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +67,9 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasData) {
                 return ResponsiveLayout(
                     webScreenLayout: const WebScreenLayout(),
-                    mobileScreenLayout: MobileScreenLayout());
+                    mobileScreenLayout: MobileScreenLayout(
+                      camera: camera,
+                    ));
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text("${snapshot.error}"),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/providers/navbar_provider.dart';
+import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/widgets/profile_listtile.dart';
 import 'package:instagram_clone/widgets/search_bar.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -49,7 +52,10 @@ class _ChatScreenState extends State<ChatScreen>
               Icons.arrow_back,
               size: 28,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<PageViewProvider>(context, listen: false)
+                  .changePage(1);
+            },
           ),
           leadingWidth: 50,
           title: Row(
@@ -81,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen>
           ],
           bottom: TabBar(
             indicatorColor: primaryColor,
-
+            // isScrollable: false,
             // unselectedLabelColor: Colors.amber,
             controller: _tabController,
             tabs: _chatScreenTabs,
@@ -89,33 +95,47 @@ class _ChatScreenState extends State<ChatScreen>
 
           // shadowColor: Colors.white,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: const [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  '‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 5, color: Colors.white54),
-                ),
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: const [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 5, color: Colors.white54),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  SearchBar(),
+                  ProfileListTile(
+                    profilePicURL: "assets/images/profile1.jpg",
+                    name: "Raghav Nagar",
+                    msg: "Pls bhai yar",
+                    timeAgo: "7h",
+                    isSeen: true,
+                    hasStories: false,
+                    allStoriesViewed: false,
+                  ),
+                  ProfileListTile(
+                    profilePicURL: "assets/images/profile2.jpg",
+                    name: "Samay Raina",
+                    msg: "Hey Dude! Kaisa hai?",
+                    timeAgo: "2d",
+                    isSeen: false,
+                    hasStories: false,
+                    allStoriesViewed: false,
+                  ),
+                ],
               ),
-              SizedBox(height: 15),
-              SearchBar(),
-              ProfileListTile(
-                  profilePicURL: "assets/images/profile1.jpg",
-                  name: "Raghav Nagar",
-                  msg: "Pls bhai yar",
-                  timeAgo: "7h",
-                  isSeen: true),
-              ProfileListTile(
-                  profilePicURL: "assets/images/profile2.jpg",
-                  name: "Samay Raina",
-                  msg: "Hey Dude! Kaisa hai?",
-                  timeAgo: "2d",
-                  isSeen: false),
-            ],
-          ),
+            ),
+            Text('asas'),
+            Text('asas'),
+          ],
         ),
       ),
     );

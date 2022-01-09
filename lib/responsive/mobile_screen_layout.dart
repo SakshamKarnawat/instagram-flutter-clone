@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,7 +14,8 @@ import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 class MobileScreenLayout extends StatelessWidget {
-  const MobileScreenLayout({Key? key}) : super(key: key);
+  final CameraDescription camera;
+  const MobileScreenLayout({Key? key, required this.camera}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +28,14 @@ class MobileScreenLayout extends StatelessWidget {
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          PageViewCameraFeedChat(),
-          ExploreScreen(),
-          ReelsScreen(),
-          ActivityScreen(),
-          ProfileScreen(),
+        children: [
+          PageViewCameraFeedChat(
+            camera: camera,
+          ),
+          const ExploreScreen(),
+          const ReelsScreen(),
+          const ActivityScreen(),
+          const ProfileScreen(),
         ],
         //onPageChanged: Provider.of<NavBarProvider>(context).onPageChanged,
       ),
