@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
+import 'package:instagram_clone/providers/pageview_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:provider/provider.dart';
 
-class FeedScreen extends StatefulWidget {
+class FeedScreen extends ConsumerStatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _FeedScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _FeedScreenState();
 }
 
-class _FeedScreenState extends State<FeedScreen>
+class _FeedScreenState extends ConsumerState<FeedScreen>
     with AutomaticKeepAliveClientMixin<FeedScreen> {
   @override
   bool get wantKeepAlive => true;
@@ -47,8 +47,7 @@ class _FeedScreenState extends State<FeedScreen>
                 padding: const EdgeInsets.only(right: 8.0),
                 child: GestureDetector(
                   onTap: () {
-                    Provider.of<PageViewProvider>(context, listen: false)
-                        .changePage(2);
+                    ref.read(pageviewProvider.notifier).value = 2;
                   },
                   child: SvgPicture.asset(
                     'assets/images/chat_icon.svg',

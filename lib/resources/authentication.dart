@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instagram_clone/models/user.dart' as model;
-import 'package:instagram_clone/resources/storage_methods.dart';
+import 'package:instagram_clone/resources/storage.dart';
 
 class Authentication {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -32,8 +32,8 @@ class Authentication {
       //create user:
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      final String profilePicURL = await StorageMethods()
-          .uploadProfilePicToStorage(imageFile /* , username */);
+      final String profilePicURL =
+          await Storage().uploadProfilePicToStorage(imageFile /* , username */);
       //add user to database:
       model.User _user = model.User(
         username: username,

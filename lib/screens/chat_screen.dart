@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_clone/providers/navbar_provider.dart';
-import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
+import 'package:instagram_clone/providers/pageview_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/widgets/profile_listtile.dart';
 import 'package:instagram_clone/widgets/search_bar.dart';
-import 'package:provider/provider.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  ConsumerState<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen>
+class _ChatScreenState extends ConsumerState<ChatScreen>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   @override
   bool get wantKeepAlive => true;
@@ -53,8 +52,7 @@ class _ChatScreenState extends State<ChatScreen>
               size: 28,
             ),
             onPressed: () {
-              Provider.of<PageViewProvider>(context, listen: false)
-                  .changePage(1);
+              ref.read(pageviewProvider.notifier).value = 1;
             },
           ),
           leadingWidth: 50,
@@ -133,8 +131,8 @@ class _ChatScreenState extends State<ChatScreen>
                 ],
               ),
             ),
-            Text('asas'),
-            Text('asas'),
+            const Text('asas'),
+            const Text('asas'),
           ],
         ),
       ),

@@ -1,16 +1,17 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReelsProvider extends ChangeNotifier {
-  bool _isPlaying = false;
-  bool get isPlaying => _isPlaying;
+final reelsProvider = StateNotifierProvider<ReelsProvider, bool>((ref) {
+  return ReelsProvider();
+});
+
+class ReelsProvider extends StateNotifier<bool> {
+  ReelsProvider() : super(false);
 
   void play() {
-    _isPlaying = true;
-    notifyListeners();
+    state = true;
   }
 
   void pause() {
-    _isPlaying = false;
-    notifyListeners();
+    state = false;
   }
 }

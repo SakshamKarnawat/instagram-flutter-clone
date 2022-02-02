@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/providers/navbar_provider.dart';
 import 'package:instagram_clone/screens/activity_screen.dart';
@@ -8,20 +9,17 @@ import 'package:instagram_clone/screens/pageview_camerafeedchat.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/screens/reels_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    int _pageIndex =
-        Provider.of<NavBarProvider>(context, listen: false).getNavbarIndex;
-    PageController _pageController =
-        Provider.of<NavBarProvider>(context).getNavbarPageController;
-    print("build called");
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _pageIndex = ref.watch(indexProvider);
+    final PageController _pageController =
+        PageController(keepPage: true, initialPage: _pageIndex);
     return Scaffold(
       body: PageView(
         controller: _pageController,
@@ -33,13 +31,15 @@ class HomeScreen extends StatelessWidget {
           ActivityScreen(),
           ProfileScreen(),
         ],
-        //onPageChanged: Provider.of<NavBarProvider>(context).onPageChanged,
+        onPageChanged: (val) => ref.read(indexProvider.notifier).value = val,
       ),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _pageIndex,
         activeColor: primaryColor,
-        onTap: Provider.of<NavBarProvider>(context).bottomNavBarTapped,
-        // onTap: Provider.of<NavBarProvider>(context).bottomNavBarTapped,
+        onTap: (index) {
+          ref.read(indexProvider.notifier).value = index;
+          _pageController.jumpToPage(index);
+        },
         backgroundColor: mobileBackgroundColor,
         items: [
           BottomNavigationBarItem(
@@ -106,66 +106,6 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: _pageIndex == 4 ? primaryColor : secondaryColor,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class TestScreen extends StatefulWidget {
-  const TestScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TestScreen> createState() => _TestScreenState();
-}
-
-class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
-  @override
-  void initState() {
-    _tabController = TabController(length: 3, vsync: this);
-    super.initState();
-  }
-
-  late final TabController _tabController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Test'),
-      ),
-      body: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          scrollDirection: Axis.vertical,
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            SliverToBoxAdapter(
-              //headerSilverBuilder only accepts slivers
-              child: Column(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('My Top Widget'),
-                  ),
-                  TabBar(
-                    tabs: [
-                      Tab(child: Text('Available')),
-                      Tab(child: Text('Taken')),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-          body: const TabBarView(
-            children: [
-              // I wrapped large widgets in the SingleChildScrollView
-              SingleChildScrollView(
-                child: Text('1') /*Very large widget*/,
-              ),
-              Text('2'),
-            ],
-          ),
-        ),
       ),
     );
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/constants.dart';
 import 'package:instagram_clone/utils/modal_sheets.dart';
 import 'package:video_player/video_player.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ReelsScreen extends StatefulWidget {
   const ReelsScreen({Key? key}) : super(key: key);
@@ -94,7 +94,7 @@ class _SingleReelScreenState extends State<SingleReelScreen>
   late Future<void> _initializeVideoPlayerFuture;
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   void initState() {
@@ -139,7 +139,7 @@ class _SingleReelScreenState extends State<SingleReelScreen>
                         _videoPlayerController.setVolume(1.0);
                       }
                     });
-                    Future.delayed(Duration(milliseconds: 2000), () {
+                    Future.delayed(const Duration(milliseconds: 2000), () {
                       setState(() {
                         _visibility = false;
                       });
@@ -255,7 +255,7 @@ class _SingleReelScreenState extends State<SingleReelScreen>
                         ),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),

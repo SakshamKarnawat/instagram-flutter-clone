@@ -1,12 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:instagram_clone/providers/pageview_provider.dart';
 import 'package:instagram_clone/screens/camera_screen.dart';
 import 'package:instagram_clone/screens/chat_screen.dart';
 import 'package:instagram_clone/screens/feed_screen.dart';
-import 'package:provider/provider.dart';
 
-class PageViewCameraFeedChat extends StatelessWidget {
+class PageViewCameraFeedChat extends ConsumerWidget {
   const PageViewCameraFeedChat({
     Key? key,
   }) : super(key: key);
@@ -18,9 +18,9 @@ class PageViewCameraFeedChat extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final PageController _pageController =
-        Provider.of<PageViewProvider>(context).getNavbarPageController;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final int index = ref.watch(pageviewProvider);
+    final PageController _pageController = PageController(initialPage: index);
     return PageView(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,

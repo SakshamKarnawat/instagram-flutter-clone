@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagram_clone/providers/init_provider.dart';
-import 'package:instagram_clone/providers/navbar_provider.dart';
-import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
-import 'package:instagram_clone/providers/reels_provider.dart';
 import 'package:instagram_clone/providers/theme_provider.dart';
-import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
-import 'package:instagram_clone/responsive/web_screen_layout.dart';
 import 'package:instagram_clone/screens/auth_screen.dart';
+import 'package:instagram_clone/screens/home_screen.dart';
+import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:provider/provider.dart' as pro;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,41 +18,41 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final firebaseInit = ref.watch(firebaseInitProvider);
-    return pro.MultiProvider(
-      providers: [
-        pro.ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        pro.ChangeNotifierProvider(create: (_) => ReelsProvider()),
-        pro.ChangeNotifierProvider(create: (_) => NavBarProvider()),
-        pro.ChangeNotifierProvider(create: (_) => PageViewProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Instagram Clone',
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: mobileBackgroundColor,
-        ),
-        home: firebaseInit.when(
-          data: (data) {
-            return const ResponsiveLayout(
+    final AsyncValue firebaseInit = ref.watch(firebaseInitProvider);
+    final darkModeEnabled = ref.watch(themeProvider);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Instagram Clone',
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark()
+          .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/login': (context) => const HomeScreen(),
+        '/signup': (context) => const SignupScreen(),
+      },
+      themeMode: darkModeEnabled ? ThemeMode.dark : ThemeMode.light,
+      home: firebaseInit.when(
+        data: (data) {
+          /* return const ResponsiveLayout(
               webScreenLayout: WebScreenLayout(),
               mobileScreenLayout: AuthScreen(),
-            );
-          },
-          error: (e, err) {
-            return Center(
-              child: Text(e.toString() + "     " + err.toString()),
-            );
-          },
-          loading: () {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: primaryColor,
-            ));
-          },
-        ),
-
-        /* StreamBuilder(
+            ); */
+          return const AuthScreen();
+        },
+        error: (e, err) {
+          return Center(
+            child: Text(e.toString() + "     " + err.toString()),
+          );
+        },
+        loading: () {
+          return const Center(
+              child: CircularProgressIndicator(
+            color: primaryColor,
+          ));
+        },
+      ),
+      /* StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
@@ -79,11 +75,10 @@ class MyApp extends ConsumerWidget {
             return const LoginScreen();
           },
         ), */
-        /* const ResponsiveLayout(
+      /* const ResponsiveLayout(
             webScreenLayout: WebScreenLayout(),
             mobileScreenLayout: MobileScreenLayout(),
           ), */
-      ),
     );
   }
 }
