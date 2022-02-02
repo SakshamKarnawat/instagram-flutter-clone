@@ -6,8 +6,10 @@ class User {
   final String uid;
   final String email;
   final String bio;
-  final List<User> followers;
-  final List<User> following;
+  final List<dynamic> followers;
+  final List<dynamic> following;
+  // final List<User> followers;
+  // final List<User> following;
   final String profilePicURL;
   final int noOfPosts;
   final bool isPrivate;
@@ -41,16 +43,16 @@ class User {
   static User fromSnap(DocumentSnapshot snapshot) {
     var snap = snapshot.data() as Map<String, dynamic>;
     return User(
-      username: snapshot['username'],
-      uid: snapshot['uid'],
+      username: snap['username'],
+      uid: snap['uid'],
       // displayName: snapshot['displayName'],
-      bio: snapshot['bio'],
-      email: snapshot['email'],
-      profilePicURL: snapshot['profilePicURL'],
-      followers: snapshot['followers'],
-      following: snapshot['following'],
-      noOfPosts: snapshot['noOfPosts'],
-      isPrivate: snapshot['isPrivate'],
+      bio: snap['bio'],
+      email: snap['email'],
+      profilePicURL: snap['profilePicURL'],
+      followers: snap['followers'],
+      following: snap['following'],
+      noOfPosts: snap['noOfPosts'],
+      isPrivate: snap['isPrivate'],
     );
   }
 }

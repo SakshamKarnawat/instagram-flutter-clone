@@ -7,9 +7,15 @@ import 'package:instagram_clone/screens/feed_screen.dart';
 import 'package:provider/provider.dart';
 
 class PageViewCameraFeedChat extends StatelessWidget {
-  final CameraDescription camera;
-  const PageViewCameraFeedChat({Key? key, required this.camera})
-      : super(key: key);
+  const PageViewCameraFeedChat({
+    Key? key,
+  }) : super(key: key);
+
+  Future<CameraDescription> initCamera() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+    return firstCamera;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +26,19 @@ class PageViewCameraFeedChat extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       controller: _pageController,
       children: [
-        CameraScreen(
-          camera: camera,
+        FutureBuilder(
+          future: initCamera(),
+          builder: (context, AsyncSnapshot<CameraDescription> snapshot) {
+            if (snapshot.hasData) {
+              return CameraScreen(camera: snapshot.data!);
+            } else if (snapshot.hasError) {
+              return const Text('err');
+            } else {
+              return const ColoredBox(
+                color: Colors.yellow,
+              );
+            }
+          },
         ),
         const FeedScreen(),
         const ChatScreen(),

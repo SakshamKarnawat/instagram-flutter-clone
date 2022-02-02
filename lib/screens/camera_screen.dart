@@ -9,18 +9,14 @@ class CameraScreen extends StatefulWidget {
   State<CameraScreen> createState() => _CameraScreenState();
 }
 
-class _CameraScreenState extends State<CameraScreen>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+class _CameraScreenState extends State<CameraScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(widget.camera, ResolutionPreset.high);
+    _controller = CameraController(widget.camera, ResolutionPreset.max);
     _initializeControllerFuture = _controller.initialize();
   }
 
@@ -42,26 +38,26 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       body: FutureBuilder(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return AspectRatio(
+              aspectRatio: MediaQuery.of(context).size.aspectRatio,
+              child: CameraPreview(_controller),
             );
+          } else {
+            return const Center();
           }
         },
       ),
-      /* floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: takePicture,
-        heroTag: null,
+        // heroTag: null,
         child: const Icon(Icons.camera_alt),
-      ), */
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }

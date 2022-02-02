@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/resources/authentication.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const EdgeInsets.symmetric(vertical: 14)),
                         ),
                         onPressed: () async {
-                          String res = await AuthMethods().logInUser(
+                          String res = await Authentication().logInUser(
                             email: "saksham@email.com",
                             password: "password",
                           );

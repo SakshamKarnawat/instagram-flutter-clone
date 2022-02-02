@@ -1,21 +1,19 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/providers/navbar_provider.dart';
 import 'package:instagram_clone/screens/activity_screen.dart';
-import 'package:instagram_clone/screens/chat_screen.dart';
 import 'package:instagram_clone/screens/explore_screen.dart';
-import 'package:instagram_clone/screens/feed_screen.dart';
 import 'package:instagram_clone/screens/pageview_camerafeedchat.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/screens/reels_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
-class MobileScreenLayout extends StatelessWidget {
-  final CameraDescription camera;
-  const MobileScreenLayout({Key? key, required this.camera}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +26,12 @@ class MobileScreenLayout extends StatelessWidget {
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: [
-          PageViewCameraFeedChat(
-            camera: camera,
-          ),
-          const ExploreScreen(),
-          const ReelsScreen(),
-          const ActivityScreen(),
-          const ProfileScreen(),
+        children: const [
+          PageViewCameraFeedChat(),
+          ExploreScreen(),
+          ReelsScreen(),
+          ActivityScreen(),
+          ProfileScreen(),
         ],
         //onPageChanged: Provider.of<NavBarProvider>(context).onPageChanged,
       ),
@@ -135,7 +131,7 @@ class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Test'),
+        title: const Text('Test'),
       ),
       body: DefaultTabController(
         length: 2,
@@ -145,9 +141,9 @@ class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
             SliverToBoxAdapter(
               //headerSilverBuilder only accepts slivers
               child: Column(
-                children: [
+                children: const [
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(16.0),
                     child: Text('My Top Widget'),
                   ),
                   TabBar(
@@ -160,7 +156,7 @@ class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
               ),
             ),
           ],
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               // I wrapped large widgets in the SingleChildScrollView
               SingleChildScrollView(

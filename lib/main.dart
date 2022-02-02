@@ -1,58 +1,34 @@
-import 'package:camera/camera.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/data/models/user.dart' as usermodel;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:instagram_clone/providers/init_provider.dart';
 import 'package:instagram_clone/providers/navbar_provider.dart';
 import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
+import 'package:instagram_clone/providers/reels_provider.dart';
 import 'package:instagram_clone/providers/theme_provider.dart';
-import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
-import 'package:instagram_clone/screens/login_screen.dart';
-import 'package:instagram_clone/screens/signup_screen.dart';
+import 'package:instagram_clone/responsive/web_screen_layout.dart';
+import 'package:instagram_clone/screens/auth_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:provider/provider.dart';
-
-import 'responsive/mobile_screen_layout.dart';
-import 'responsive/web_screen_layout.dart';
+import 'package:provider/provider.dart' as pro;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "AIzaSyC5Yhk0TTxnP8ZYA5XHwTttREiFuvcuBuo",
-        appId: "1:1004502463697:web:d6d691b2ce66421a8a41f0",
-        messagingSenderId: "1004502463697",
-        projectId: "instagram-clone-b9139",
-        storageBucket: "instagram-clone-b9139.appspot.com",
-      ),
-    );
-  } else {
-    await Firebase.initializeApp();
-  }
-  final cameras = await availableCameras();
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-  runApp(MyApp(camera: firstCamera));
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  final CameraDescription camera;
-  const MyApp({
-    Key? key,
-    required this.camera,
-  }) : super(key: key);
+class MyApp extends ConsumerWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final firebaseInit = ref.watch(firebaseInitProvider);
+    return pro.MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => NavBarProvider()),
-        ChangeNotifierProvider(create: (_) => PageViewProvider()),
+        pro.ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        pro.ChangeNotifierProvider(create: (_) => ReelsProvider()),
+        pro.ChangeNotifierProvider(create: (_) => NavBarProvider()),
+        pro.ChangeNotifierProvider(create: (_) => PageViewProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -60,16 +36,35 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: mobileBackgroundColor,
         ),
-        home: StreamBuilder(
+        home: firebaseInit.when(
+          data: (data) {
+            return const ResponsiveLayout(
+              webScreenLayout: WebScreenLayout(),
+              mobileScreenLayout: AuthScreen(),
+            );
+          },
+          error: (e, err) {
+            return Center(
+              child: Text(e.toString() + "     " + err.toString()),
+            );
+          },
+          loading: () {
+            return const Center(
+                child: CircularProgressIndicator(
+              color: primaryColor,
+            ));
+          },
+        ),
+
+        /* StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
-                return ResponsiveLayout(
-                    webScreenLayout: const WebScreenLayout(),
-                    mobileScreenLayout: MobileScreenLayout(
-                      camera: camera,
-                    ));
+                return const ResponsiveLayout(
+                  webScreenLayout: WebScreenLayout(),
+                  mobileScreenLayout: MobileScreenLayout(),
+                );
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text("${snapshot.error}"),
@@ -83,11 +78,11 @@ class MyApp extends StatelessWidget {
             }
             return const LoginScreen();
           },
-        ),
-        /* const ResponsiveLayout(
-          webScreenLayout: WebScreenLayout(),
-          mobileScreenLayout: MobileScreenLayout(),
         ), */
+        /* const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ), */
       ),
     );
   }

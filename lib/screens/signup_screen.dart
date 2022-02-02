@@ -1,9 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/resources/authentication.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
@@ -53,7 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             imageFile = image;
                           });
                         },
-                        child: Container(
+                        child: SizedBox(
                           height: 135,
                           width: 135,
                           child: imageFile != null
@@ -146,7 +145,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   // margin:
                                   //     const EdgeInsets.symmetric(vertical: 15),
                                   height: 50,
@@ -161,7 +160,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                     onPressed: () async {
                                       String res =
-                                          await AuthMethods().signUpUser(
+                                          await Authentication().signUpUser(
                                         email: "saksham@email.com",
                                         // displayName: "Saksham Karnawat",
                                         password: "password",
@@ -206,7 +205,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                     onPressed: () async {
                                       String res =
-                                          await AuthMethods().signUpUser(
+                                          await Authentication().signUpUser(
                                         email: "saksham@email.com",
                                         // displayName: "Saksham Karnawat",
                                         password: "password",
@@ -229,7 +228,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ],
                         ),
                       ),
-                      Flexible(
+                      const Flexible(
                         flex: 2,
                         child: SizedBox(),
                       ),

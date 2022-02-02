@@ -162,7 +162,7 @@ class _SingleReelScreenState extends State<SingleReelScreen>
                       radius: 35,
                       backgroundColor: Colors.black38,
                       child: Icon(
-                        _mute ? Icons.volume_off : Icons.volume_up,
+                        _mute ? Icons.volume_up : Icons.volume_off,
                         color: primaryColor,
                       )),
                 ),

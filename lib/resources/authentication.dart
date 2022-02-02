@@ -1,13 +1,18 @@
 import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:instagram_clone/data/models/user.dart' as model;
+import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/storage_methods.dart';
 
-class AuthMethods {
+class Authentication {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  //Stream to listen to authentication changes:
+  Stream<User?> get authStateChange => _auth.authStateChanges();
+
+  //Get user details:
   Future<model.User> getUserDetails() async {
     User? currentUser = _auth.currentUser;
     DocumentSnapshot snapshot =
@@ -63,5 +68,10 @@ class AuthMethods {
       result = err.toString();
     }
     return result;
+  }
+
+  //Sign out user:
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }

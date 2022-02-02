@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:instagram_clone/providers/navbar_provider.dart';
 import 'package:instagram_clone/providers/pageview_camerafeedchat_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +8,7 @@ class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
 
   @override
-  State<FeedScreen> createState() => _FeedScreenState();
+  State<StatefulWidget> createState() => _FeedScreenState();
 }
 
 class _FeedScreenState extends State<FeedScreen>
@@ -324,7 +323,7 @@ class UserPost extends StatelessWidget {
                     ),
               Text(
                 username,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: primaryColor,
                 ),
@@ -350,7 +349,7 @@ class UserPost extends StatelessWidget {
           ),
           Row(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Icon(
                   Icons.favorite_outline,
@@ -358,7 +357,7 @@ class UserPost extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SvgPicture.asset(
                   'assets/images/comment_icon.svg',
                   height: 24,
@@ -367,7 +366,7 @@ class UserPost extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SvgPicture.asset(
                   'assets/images/send_in_dm_icon.svg',
                   height: 24,
@@ -375,9 +374,9 @@ class UserPost extends StatelessWidget {
                   color: primaryColor,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SvgPicture.asset(
                   'assets/images/bookmark_icon.svg',
                   height: 24,
@@ -394,7 +393,7 @@ class UserPost extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
             child: Text(
               "$noOfLikes likes",
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -403,10 +402,10 @@ class UserPost extends StatelessWidget {
             height: 4,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.0),
+            padding: const EdgeInsets.symmetric(horizontal: 6.0),
             child: Text(
               "View all $noOfComments comments",
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
             ),
           ),
           const SizedBox(
@@ -415,7 +414,7 @@ class UserPost extends StatelessWidget {
           Row(
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: CircleAvatar(
                   radius: 16,
                   child: ClipOval(
@@ -432,7 +431,7 @@ class UserPost extends StatelessWidget {
               ),
               const Spacer(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SvgPicture.asset(
                   'assets/images/heart_filled_small.svg',
                   height: 16,
@@ -446,7 +445,7 @@ class UserPost extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: const Icon(
+                child: Icon(
                   Icons.add_circle_outline,
                   size: 16,
                   color: secondaryColor,
@@ -458,10 +457,10 @@ class UserPost extends StatelessWidget {
             height: 10,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               "$timeAgo ago",
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+              style: const TextStyle(color: Colors.grey, fontSize: 12),
             ),
           ),
         ],
