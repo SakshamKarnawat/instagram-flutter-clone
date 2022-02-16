@@ -12,13 +12,8 @@ class Authentication {
   //Stream to listen to authentication changes:
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  //Get user details:
-  Future<model.User> getUserDetails() async {
-    User? currentUser = _auth.currentUser;
-    DocumentSnapshot snapshot =
-        await _firestore.collection('users').doc(currentUser?.uid).get();
-    return model.User.fromSnap(snapshot);
-  }
+  //Get current user:
+  User? get currentUser => _auth.currentUser;
 
   //Sign up user:
   Future<String> signUpUser(
@@ -46,9 +41,10 @@ class Authentication {
         profilePicURL: profilePicURL,
         noOfPosts: 0,
       );
-      _firestore.collection('users').doc(credential.user!.uid).set(
-            _user.toJson(),
-          );
+      _firestore
+          .collection('users')
+          .doc(credential.user!.uid)
+          .set(_user.toJson());
       result = "Success!";
     } catch (err) {
       result = err.toString();

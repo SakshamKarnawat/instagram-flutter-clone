@@ -1,3 +1,8 @@
-# instagram_clone
+# Instagram Clone
 
-A responsive Instagram clone built using Flutter
+A full-stack Instagram clone
+
+## Tech Stack
+### Frontend: Flutter/Dart
+### Backend: Node.js
+### Database: MongoDB

@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/providers/auth_provider.dart';
 import 'package:instagram_clone/resources/authentication.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = ref.read(authProvider);
+  }
 
   @override
   void dispose() {
@@ -22,6 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
   }
+
+  late final Authentication _auth;
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               const EdgeInsets.symmetric(vertical: 14)),
                         ),
                         onPressed: () async {
-                          String res = await Authentication().logInUser(
-                            email: "saksham@email.com",
-                            password: "password",
-                          );
-                          if (res != "Success!") {
-                            showSnackBar(res, context);
+                          String result = await _auth.logInUser(
+                              email: "saksham@email.com", password: "password");
+
+                          if (result != "Success!") {
+                            showSnackBar(result, context);
                           }
                         },
                         child: const Text(

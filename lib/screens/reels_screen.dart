@@ -16,7 +16,7 @@ class ReelsScreen extends StatefulWidget {
 class _ReelsScreenState extends State<ReelsScreen>
     with AutomaticKeepAliveClientMixin {
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   final PageController _pageViewController =
       PageController(initialPage: 0, keepPage: true);

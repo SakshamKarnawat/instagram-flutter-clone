@@ -5,6 +5,7 @@ import 'package:instagram_clone/providers/pageview_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/widgets/profile_listtile.dart';
 import 'package:instagram_clone/widgets/search_bar.dart';
+import 'package:instagram_clone/widgets/showcase_alert.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -17,26 +18,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   @override
   bool get wantKeepAlive => true;
-
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  static const List<Tab> _chatScreenTabs = <Tab>[
-    Tab(child: Text('Chats', style: TextStyle(fontSize: 16))),
-    Tab(child: Text('Calls', style: TextStyle(fontSize: 16))),
-    Tab(child: Text('Requests', style: TextStyle(fontSize: 16))),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,89 +45,171 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     padding: EdgeInsets.only(bottom: 3.0, right: 8),
                     child: Text(
                       'saksham_227',
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 20),
                       softWrap: false,
                       overflow: TextOverflow.fade,
                     )),
               ),
               RotatedBox(
-                  quarterTurns: 2,
-                  child: SvgPicture.asset('assets/images/down_arrow_icon.svg',
-                      color: Colors.white, width: 14, height: 14)),
+                quarterTurns: 2,
+                child: SvgPicture.asset(
+                  'assets/images/down_arrow_icon.svg',
+                  color: Colors.white,
+                  width: 12,
+                  height: 12,
+                ),
+              ),
             ],
           ),
           actions: [
             SvgPicture.asset('assets/images/videocam1.svg',
-                color: Colors.white, width: 35, height: 35),
-            const SizedBox(width: 30),
-            SvgPicture.asset('assets/images/new_message_icon.svg',
-                color: Colors.white, width: 30, height: 30),
+                color: Colors.white, width: 28, height: 28),
+            const SizedBox(width: 15),
+            const Icon(Icons.add, size: 30),
             const SizedBox(width: 10),
           ],
-          bottom: TabBar(
-            indicatorColor: primaryColor,
-            // isScrollable: false,
-            // unselectedLabelColor: Colors.amber,
-            controller: _tabController,
-            tabs: _chatScreenTabs,
-          ),
-
-          // shadowColor: Colors.white,
         ),
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: const [
-                  Align(
-                    alignment: Alignment.center,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              const SearchBar(),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     child: Text(
-                      '‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 5, color: Colors.white54),
+                      'Messages',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 15),
-                  SearchBar(),
-                  ProfileListTile(
-                    profilePicURL: "assets/images/profile1.jpg",
-                    name: "Raghav Nagar",
-                    msg: "Pls bhai yar",
-                    timeAgo: "7h",
-                    isSeen: true,
-                    hasStories: false,
-                    allStoriesViewed: false,
-                  ),
-                  ProfileListTile(
-                    profilePicURL: "assets/images/profile2.jpg",
-                    name: "Samay Raina",
-                    msg: "Hey Dude! Kaisa hai?",
-                    timeAgo: "2d",
-                    isSeen: false,
-                    hasStories: false,
-                    allStoriesViewed: false,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 0, horizontal: 10.0),
+                    child: TextButton(
+                      onPressed: () => const ShowCaseAlert(),
+                      child: const Text(
+                        'Requests',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            const Text('asas'),
-            const Text('asas'),
-          ],
+              ...chatList,
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-
-/*
-
-AppBar: 
-back button  username  switch_ac_dropdown                                video call icon      newchat_icon
-fixed TabBar - Chats | Calls | Requests
-Chats: singlechildscrollview w/ swipe up to Refresh, search bar on top (not pinned or floating), chat listtiles
-Calls: singlechildscrollview, audio video listtiles, recent listtiles, watch together blank horizontal view, call friend listtiles 
-Requests: different page altogether, appbar w/ back & title, singlechildscrollview w column 
-*/
+const List<ProfileListTile> chatList = [
+  ProfileListTile(
+    profilePicURL: "assets/images/profile1.jpg",
+    name: "First chat",
+    msg: "Hey! Long time no see!",
+    timeAgo: "7h",
+    isSeen: true,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+  ProfileListTile(
+    profilePicURL: "assets/images/profile2.jpg",
+    name: "Samay Raina",
+    msg: "Hi bhai kaisa hai?",
+    timeAgo: "2d",
+    isSeen: false,
+    hasStories: false,
+    allStoriesViewed: false,
+  ),
+];

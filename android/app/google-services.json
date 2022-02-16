@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1004502463697:android:18c675fdbdcf15fd8a41f0",
+        "mobilesdk_app_id": "1:1004502463697:android:62de355326b2b1188a41f0",
         "android_client_info": {
-          "package_name": "com.example.instagram_clone"
+          "package_name": "com.example.instaclone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1004502463697-7md4qvu4mehi1r77nh1hrstfd9aa92ud.apps.googleusercontent.com",
+          "client_id": "1004502463697-aicrf7m1a5k4mdthdabidb70s7kqivop.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.instagram_clone",
+            "package_name": "com.example.instaclone",
             "certificate_hash": "ff75d6a0c595e898c97e25cc33548ed4057f23a7"
           }
         },

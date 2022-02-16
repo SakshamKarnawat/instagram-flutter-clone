@@ -27,7 +27,7 @@ class ProfileListTile extends StatelessWidget {
       onTap: () {},
       minLeadingWidth: 0,
       horizontalTitleGap: 8,
-      contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
       leading: CircleAvatar(
           radius: 36,
           backgroundColor: Colors.amber,
@@ -71,12 +71,12 @@ class ProfileListTile extends StatelessWidget {
               Container(
                 width: 10,
                 height: 10,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: blueColor,
                 ),
               ),
-            SizedBox(width: 25),
+            const SizedBox(width: 25),
             SvgPicture.asset(
               'assets/images/camera_icon.svg',
               color: isSeen ? Colors.white60 : primaryColor,
